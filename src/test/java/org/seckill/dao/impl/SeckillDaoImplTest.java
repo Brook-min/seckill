@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -24,7 +27,9 @@ public class SeckillDaoImplTest {
 
     @Test
     public void reduceNumber() throws Exception {
-
+        Date killTime = new Date();
+        int updateCount = seckillDao.reducenumber(1004L, killTime);
+        System.out.println("updateCount = " + updateCount);
     }
 
     @Test
@@ -34,7 +39,12 @@ public class SeckillDaoImplTest {
         System.out.println("seckill = " + seckill);
     }
 
+    //param注解保存参数
     @Test
-    public void queryAll() {
+    public void queryAll() throws Exception {
+        List<Seckill> seckills = seckillDao.queryAll(0, 100);
+        for (Seckill seckill : seckills) {
+            System.out.println(seckill);
+        }
     }
 }
