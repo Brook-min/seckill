@@ -56,7 +56,7 @@ public class SeckillServiceImpl implements SeckillService {
         Date endTime = seckill.getEndTime();
         //系统时间
         Date nowTime = new Date();
-        if (nowTime.getTime() < endTime.getTime()
+        if (nowTime.getTime() < startTime.getTime()
                 || nowTime.getTime() > endTime.getTime()) {
             return new Exposer(false, seckillId, nowTime.getTime(), startTime.getTime(), endTime.getTime());
         }
@@ -79,7 +79,7 @@ public class SeckillServiceImpl implements SeckillService {
      * 3、不是所有的方法都需要事物，如只有一条修改操作，只读操作不需要事物控制
      */
     public SeckillExecution executeSeckill(long seckillId, long userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
-        if (md5 == null || md5.equals(getMD5(seckillId))) {
+        if (md5 == null || !md5.equals(getMD5(seckillId))) {
             throw new SeckillException("seckill data rewriter");
         }
         //执行秒杀逻辑：减库存+记录购买行为
